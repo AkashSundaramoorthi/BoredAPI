@@ -3,7 +3,7 @@ const cors = require('cors');
 const app = express();
 const port = 8000;
 const masterKey = "4VGP2DN-6EWM4SJ-N6FGRHV-Z3PR3TT";
-
+const path = require('path');
 const cure = [
   {"activity": "Create a DIY craft project", "key": "1", "participants": "1-2", "type": "Creative", "link": "", "difficulty": "Medium", "duration": "2-3 hours"},
   {"activity": "Practice mindfulness meditation", "key": "2", "participants": "1", "type": "Wellness", "link": "", "difficulty": "Easy", "duration": "10-20 minutes"},
@@ -128,6 +128,13 @@ function participantscure(num,res){
   const findcure = cure.filter(cures => validParticipants.includes(cures.participants));
   return findcure;
 }
+
+app.use(express.static('public'));
+
+
+app.get("/", (req,res) => {
+  res.sendFile(path.join(__dirname,"index.html"));
+})
 
 //1. GET a random cure
 app.get("/random",(req,res)=>{
